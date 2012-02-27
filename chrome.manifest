@@ -1,0 +1,9 @@
+content cd-rip  chrome/content/
+skin    cd-rip  classic/1.0 chrome/skin/
+
+
+overlay chrome://songbird/content/xul/layoutWithBrowserOverlay.xul chrome://cd-rip/content/scripts-overlay.xul
+
+
+
+

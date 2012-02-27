@@ -1,0 +1,141 @@
+﻿<?xml version="1.0"?>
+
+<?xml-stylesheet href="chrome://global/skin" type="text/css"?>
+<?xml-stylesheet href="chrome://songbirdnest/content/bindings/bindings.css" type="text/css"?>
+<?xml-stylesheet href="chrome://songbirdnest/skin/songbirdnest.css" type="text/css" title="Skin"?>
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="CD RIP">
+
+<script src="CD_RIP_freac.js"/>
+<script src="CD_RIP_ui.js"/>
+<script src="main.js"/>
+<script src="nsiProcess_test.js"/>
+
+	<groupbox>
+	<caption label="CD RIP"/>
+		<!-- conteneur global -->
+		<box>
+			<!-- conteneur gauche -->
+			<box flex="5" orient="vertical">	
+				<hbox>
+					<label value="Encodeur :" style="width:120px;" />
+					<menulist label="LAME" style="width:100px;"  >
+						<menupopup>
+							<menuitem label="LAME" selected="true"  />
+							<menuitem label="VORBIS"/>
+							<menuitem label="BONK"/>
+							<menuitem label="BLADE"/>
+							<menuitem label="FAAC"/>
+							<menuitem label="FLAC"/>
+							<menuitem label="TVQ"/>
+							<menuitem label="WAVE"/>
+						</menupopup>
+					</menulist>
+				</hbox>
+				<hbox>
+					<label value="Répertoire de sortie :" style="width:120px;" />
+					<textbox id="default" oninput="setText('default');" style="width:250px;" />
+					<button id="?" label="Parcourrir" />
+				</hbox>
+				<hbox>
+					<label value="Lecteur :" style="width:120px;" />
+					<menulist style="width:100px;" >
+						<menupopup>
+							<menuitem label=""/>
+						</menupopup>
+					</menulist>
+				</hbox>
+				<hbox>
+					<label value="Titres :" style="width:120px;" />
+					<listbox id="multi-box" rows="5" seltype="multiple" onselect="setCount('multi-box', 'multi-text');" style="width:250px;" >
+						<!-- <listitem label="Gray"   /> -->
+						<listitem label="Track01.cda"   />
+						<listitem label="Track02.cda"   />
+						<listitem label="Track03.cda"   />
+						<listitem label="Track04.cda"   />
+						<listitem label="Track05.cda"   />
+						<listitem label="Track06.cda"   />
+						<listitem label="Track07.cda"   />
+					</listbox>
+				</hbox>
+				<hbox>
+					<label value="" style="width:120px;" />
+					<button label="Select All" oncommand="selectAll('multi-box');" />
+					<button label="Clear All" oncommand="clearAll('multi-box');" />
+					<description  value="#" />
+					<description  id="multi-text" value="0" />					
+				</hbox>
+			</box>
+			
+			<!-- conteneur central -->
+			<box flex="1" orient="vertical"></box>
+			
+			<!-- conteneur droite -->
+			<box flex="100" orient="vertical"  pack="center">
+				<box orient="horizontal"  pack="center">
+					<hbox>
+						<button label="Start RIP" />
+						<button label="Stop RIP" />
+					</hbox>
+				</box>
+				<groupbox>
+				<caption label="Infos progression total : (3/7)"/>
+					<box orient="vertical">
+							<progressmeter mode="undetermined" />
+							<label value="Temps écoulé :" />
+							<label value="Temps restant :" />	
+					</box>
+				</groupbox>
+				<groupbox>
+				<caption label="Infos progression : Track04.cda"/>
+					<box orient="vertical">
+							<progressmeter mode="undetermined" />
+							<label value="Temps écoulé :" />
+							<label value="Temps restant :" />	
+					</box>
+				</groupbox>
+			</box>
+		</box>
+	</groupbox>
+	
+	
+	
+	<groupbox>
+	<caption label="Configuration"/>
+		<tabbox id="myTabList" selectedIndex="0">
+			<tabs>
+				<tab label="CD RIP" style="-moz-border-radius: 5px;"/>
+				<tab label="LAME" style="-moz-border-radius: 5px;"/>
+				<tab label="VORBIS" style="-moz-border-radius: 5px;"/>
+				<tab label="BONK" style="-moz-border-radius: 5px;"/>
+				<tab label="BLADE" style="-moz-border-radius: 5px;"/>
+				<tab label="FAAC" style="-moz-border-radius: 5px;"/>
+				<tab label="FLAC" style="-moz-border-radius: 5px;"/>
+				<tab label="TVQ" style="-moz-border-radius: 5px;"/>
+				<tab label="WAVE" style="-moz-border-radius: 5px;"/>
+			</tabs>
+			<tabpanels>
+				<tabpanel>
+					<hbox>
+						<label value="Chemin vers freac : " />
+						<textbox id="elem_conf_fileStr" flex="1" />
+						<button label="Affecter" oncommand="CdRip.freac.fileStr = document.getElementById('elem_conf_fileStr').value;" />
+					</hbox>
+				</tabpanel>
+				<tabpanel><!-- tabpanel Second elements go here --></tabpanel>
+				<tabpanel><!-- tabpanel Fourth elements go here --></tabpanel>
+			</tabpanels>
+		</tabbox>
+
+	</groupbox>
+	
+	<groupbox>
+		<caption label="Besoin d'aide ?"/>
+		<hbox>
+			<spacer flex="1" />
+			<button label="A propos de CD RIP" oncommand="ouvrirAide()" />
+			<button label="Documentation CD RIP" oncommand="ouvrirAide()" />
+		</hbox>
+	</groupbox>
+	
+</window>

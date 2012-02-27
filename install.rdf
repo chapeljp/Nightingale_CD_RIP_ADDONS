@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#"
+     xmlns:nightingale="http://www.getnightingale.com/2007/addon-metadata-rdf#">
+  <Description about="urn:mozilla:install-manifest">
+    <em:id>{671e07ef-2dcc-4d5b-be3c-0893f3938397}</em:id>
+    <em:type>2</em:type>
+    <em:name>CD RIP</em:name>
+    <em:version>1.0.0.0</em:version>
+    <em:creator>asdes</em:creator>
+
+
+    <em:description>CD Rip as an add-on to be able to extract audio tracks from CDs </em:description>
+
+
+
+
+
+
+    <em:iconURL>chrome://cd-rip/skin/icon_addon.png</em:iconURL>
+
+
+    <em:targetApplication>
+      <Description>
+        <em:id>nightingale@getnightingale.com</em:id>
+        <em:minVersion>1.8.0</em:minVersion>
+        <em:maxVersion>1.11.*</em:maxVersion>
+      </Description>
+    </em:targetApplication>
+
+
+
+
+
+
+
+  </Description>
+</RDF>

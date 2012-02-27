@@ -1,0 +1,9 @@
+﻿<?xml version="1.0"?>
+
+<?xml-stylesheet href="chrome://global/skin" type="text/css"?>
+<?xml-stylesheet href="chrome://songbirdnest/content/bindings/bindings.css" type="text/css"?>
+<?xml-stylesheet href="chrome://songbirdnest/skin/songbirdnest.css" type="text/css" title="Skin"?>
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="CD RIP - Aide">
+	
+</dialog>
