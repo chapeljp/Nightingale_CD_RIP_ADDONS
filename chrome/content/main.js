@@ -35,9 +35,18 @@ CdRip.Controller = {
 	
 	
 	//définition des prefs
-	document.getElementById('elem_conf_fileStr').value = prefs.getCharPref("pathtofreac");		
-    
-
+	//onglet - CD RIP
+	document.getElementById('conf_cd_rip_freaccmd_exe').value = prefs.getCharPref("conf_cd_rip_freaccmd_exe");
+	document.getElementById('conf_cd_rip_oupout_dir').value = prefs.getCharPref("conf_cd_rip_oupout_dir");
+	
+	//onglet - LAME
+	document.getElementById('conf_lame_mode').parentNode.selectedIndex = prefs.getIntPref("conf_lame_mode");
+	document.getElementById('conf_lame_cbr_abr_bitrate').value = prefs.getIntPref("conf_lame_cbr_abr_bitrate");
+	document.getElementById('conf_lame_vbr_quality').value = prefs.getIntPref("conf_lame_vbr_quality");
+	
+	//onglet - VORBIS
+	
+	
   },
   
 

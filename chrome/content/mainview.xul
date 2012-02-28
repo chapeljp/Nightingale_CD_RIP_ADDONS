@@ -3,139 +3,373 @@
 <?xml-stylesheet href="chrome://global/skin" type="text/css"?>
 <?xml-stylesheet href="chrome://songbirdnest/content/bindings/bindings.css" type="text/css"?>
 <?xml-stylesheet href="chrome://songbirdnest/skin/songbirdnest.css" type="text/css" title="Skin"?>
+<?xml-stylesheet href="chrome://cd-rip/skin/overlay.css" type="text/css" title="Skin"?>
 
 <window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="CD RIP">
 
-<script src="CD_RIP_freac.js"/>
-<script src="CD_RIP_ui.js"/>
-<script src="main.js"/>
-<script src="nsiProcess_test.js"/>
+	<script src="CD_RIP_freac.js"/>
+	<script src="CD_RIP_ui.js"/>
+	<script src="main.js"/>
+	<script src="nsiProcess_test.js"/>
 
-	<groupbox>
-	<caption label="CD RIP"/>
-		<!-- conteneur global -->
-		<box>
-			<!-- conteneur gauche -->
-			<box flex="5" orient="vertical">	
-				<hbox>
-					<label value="Encodeur :" style="width:120px;" />
-					<menulist label="LAME" style="width:100px;"  >
-						<menupopup>
-							<menuitem label="LAME" selected="true"  />
-							<menuitem label="VORBIS"/>
-							<menuitem label="BONK"/>
-							<menuitem label="BLADE"/>
-							<menuitem label="FAAC"/>
-							<menuitem label="FLAC"/>
-							<menuitem label="TVQ"/>
-							<menuitem label="WAVE"/>
-						</menupopup>
-					</menulist>
-				</hbox>
-				<hbox>
-					<label value="Répertoire de sortie :" style="width:120px;" />
-					<textbox id="default" oninput="setText('default');" style="width:250px;" />
-					<button id="?" label="Parcourrir" />
-				</hbox>
-				<hbox>
-					<label value="Lecteur :" style="width:120px;" />
-					<menulist style="width:100px;" >
-						<menupopup>
-							<menuitem label=""/>
-						</menupopup>
-					</menulist>
-				</hbox>
-				<hbox>
-					<label value="Titres :" style="width:120px;" />
-					<listbox id="multi-box" rows="5" seltype="multiple" onselect="setCount('multi-box', 'multi-text');" style="width:250px;" >
-						<!-- <listitem label="Gray"   /> -->
-						<listitem label="Track01.cda"   />
-						<listitem label="Track02.cda"   />
-						<listitem label="Track03.cda"   />
-						<listitem label="Track04.cda"   />
-						<listitem label="Track05.cda"   />
-						<listitem label="Track06.cda"   />
-						<listitem label="Track07.cda"   />
-					</listbox>
-				</hbox>
-				<hbox>
-					<label value="" style="width:120px;" />
-					<button label="Select All" oncommand="selectAll('multi-box');" />
-					<button label="Clear All" oncommand="clearAll('multi-box');" />
-					<description  value="#" />
-					<description  id="multi-text" value="0" />					
-				</hbox>
-			</box>
-			
-			<!-- conteneur central -->
-			<box flex="1" orient="vertical"></box>
-			
-			<!-- conteneur droite -->
-			<box flex="100" orient="vertical"  pack="center">
-				<box orient="horizontal"  pack="center">
+	<box style="overflow: auto;" orient="vertical">
+		<!-- GROUPBOX CD RIP -->
+		<groupbox>
+		<caption label="CD RIP"/>
+			<!-- conteneur global -->
+			<box>
+				<!-- conteneur gauche -->
+				<box flex="10" orient="vertical">	
 					<hbox>
-						<button label="Start RIP" />
-						<button label="Stop RIP" />
+						<label value="Encodeur :" style="width:120px;" />
+						<menulist style="width:100px;"  >
+							<menupopup>
+								<menuitem label="LAME" selected="true"  />
+								<menuitem label="VORBIS"/>
+								<menuitem label="BONK"/>
+								<menuitem label="BLADE"/>
+								<menuitem label="FAAC"/>
+								<menuitem label="FLAC"/>
+								<menuitem label="TVQ"/>
+								<menuitem label="WAVE"/>
+							</menupopup>
+						</menulist>
+					</hbox>
+					<hbox>
+						<label value="Répertoire de sortie :" style="width:120px;" />
+						<textbox id="default" style="width:250px;" />
+						<button id="?" label="Parcourrir" class="main"/>
+					</hbox>
+					<hbox>
+						<label value="Lecteur :" style="width:120px;" />
+						<menulist style="width:100px;" >
+							<menupopup>
+								<menuitem label=""/>
+							</menupopup>
+						</menulist>
+					</hbox>
+					<hbox>
+						<label value="Titres :" style="width:120px;" />
+						<listbox id="multi-box" rows="5" seltype="multiple" onselect="setCount('multi-box', 'multi-text');" style="width:250px;" >
+							<!-- <listitem label="Gray"   /> -->
+							<listitem label="Track01.cda"   />
+							<listitem label="Track02.cda"   />
+							<listitem label="Track03.cda"   />
+							<listitem label="Track04.cda"   />
+							<listitem label="Track05.cda"   />
+							<listitem label="Track06.cda"   />
+							<listitem label="Track07.cda"   />
+						</listbox>
+					</hbox>
+					<hbox>
+						<label value="" style="width:120px;" />
+						<button label="Select All" oncommand="selectAll('multi-box');" class="main"/>
+						<button label="Clear All" oncommand="clearAll('multi-box');" class="main"/>
+						<description  value="#" />
+						<description  id="multi-text" value="0" />					
 					</hbox>
 				</box>
-				<groupbox>
-				<caption label="Infos progression total : (3/7)"/>
-					<box orient="vertical">
-							<progressmeter mode="undetermined" />
-							<label value="Temps écoulé :" />
-							<label value="Temps restant :" />	
+				
+				<!-- conteneur central -->
+				<box flex="1" orient="vertical"></box>
+				
+				<!-- conteneur droite -->
+				<box flex="100" orient="vertical"  pack="center">
+					<box orient="horizontal"  pack="center">
+						<hbox>
+							<button label="Start RIP" oncommand="CdRip.freac.run();" class="main"/>
+							<button label="Stop RIP" class="main"/>
+						</hbox>
 					</box>
-				</groupbox>
-				<groupbox>
-				<caption label="Infos progression : Track04.cda"/>
-					<box orient="vertical">
-							<progressmeter mode="undetermined" />
-							<label value="Temps écoulé :" />
-							<label value="Temps restant :" />	
-					</box>
-				</groupbox>
+					<groupbox>
+					<caption label="Infos progression total : (3/7)"/>
+						<box orient="vertical">
+								<progressmeter mode="undetermined" />
+								<label value="Temps écoulé :" />
+								<label value="Temps restant :" />	
+						</box>
+					</groupbox>
+					<groupbox>
+					<caption label="Infos progression : Track04.cda"/>
+						<box orient="vertical">
+								<progressmeter mode="undetermined" />
+								<label value="Temps écoulé :" />
+								<label value="Temps restant :" />	
+						</box>
+					</groupbox>
+				</box>
 			</box>
-		</box>
-	</groupbox>
-	
-	
-	
-	<groupbox>
-	<caption label="Configuration"/>
-		<tabbox id="myTabList" selectedIndex="0">
-			<tabs>
-				<tab label="CD RIP" style="-moz-border-radius: 5px;"/>
-				<tab label="LAME" style="-moz-border-radius: 5px;"/>
-				<tab label="VORBIS" style="-moz-border-radius: 5px;"/>
-				<tab label="BONK" style="-moz-border-radius: 5px;"/>
-				<tab label="BLADE" style="-moz-border-radius: 5px;"/>
-				<tab label="FAAC" style="-moz-border-radius: 5px;"/>
-				<tab label="FLAC" style="-moz-border-radius: 5px;"/>
-				<tab label="TVQ" style="-moz-border-radius: 5px;"/>
-				<tab label="WAVE" style="-moz-border-radius: 5px;"/>
-			</tabs>
-			<tabpanels>
-				<tabpanel>
-					<hbox>
-						<label value="Chemin vers freac : " />
-						<textbox id="elem_conf_fileStr" flex="1" />
-						<button label="Affecter" oncommand="CdRip.freac.fileStr = document.getElementById('elem_conf_fileStr').value;" />
-					</hbox>
-				</tabpanel>
-				<tabpanel><!-- tabpanel Second elements go here --></tabpanel>
-				<tabpanel><!-- tabpanel Fourth elements go here --></tabpanel>
-			</tabpanels>
-		</tabbox>
+		</groupbox>
+		
+		
+		<!-- GROUPBOX CONFIGURATION -->
+		<groupbox>
+		<caption label="Configuration"/>
+			<tabbox id="myTabList" selectedIndex="0">
+				<tabs>
+					<tab label="CD RIP" style="-moz-border-radius: 5px;"/>
+					<tab label="LAME" style="-moz-border-radius: 5px;"/>
+					<tab label="VORBIS" style="-moz-border-radius: 5px;"/>
+					<tab label="BONK" style="-moz-border-radius: 5px;"/>
+					<tab label="BLADE" style="-moz-border-radius: 5px;"/>
+					<tab label="FAAC" style="-moz-border-radius: 5px;"/>
+					<tab label="FLAC" style="-moz-border-radius: 5px;"/>
+					<tab label="TVQ" style="-moz-border-radius: 5px;"/>
+					<tab label="WAVE" style="-moz-border-radius: 5px;"/>
+					<tab label="STATS" style="-moz-border-radius: 5px;"/>
+				</tabs>
+				<tabpanels>
+					<!-- TAB CD RIP -->
+					<tabpanel>
+						<vbox>
+							<hbox>
+								<label value="Options CD RIP" class="tab-option-title" />
+							</hbox>
+							<hbox>
+								<label class="tab-options" value="Répertoire de freac : " />
+								<textbox id="conf_cd_rip_freaccmd_exe" style="width:250px;" />
+								<button label="Affecter" oncommand="CdRip.freac.conf_cd_rip_freaccmd_exe = document.getElementById('conf_cd_rip_freaccmd_exe').value;" class="tab-options" />
+							</hbox>
+							<hbox>
+								<label class="tab-options" value="Répertoire de sorie par défaut : " />
+								<textbox id="conf_cd_rip_oupout_dir" style="width:250px;" />
+								<button label="Parcourrir" oncommand="CdRip.freac.conf_cd_rip_oupout_dir = document.getElementById('conf_cd_rip_oupout_dir').value;" class="tab-options" />
+							</hbox>
+							<hbox>
+								<label class="tab-options" value="Réinitialiser les préférences : " />
+								<button label="Réinitialiser" oncommand="" class="tab-options" />
+							</hbox>
+						</vbox>
+					</tabpanel>
+					<!-- TAB LAME -->
+					<tabpanel>
+						<vbox>
+							<hbox>
+								<label value="Options for LAME MP3 encoder" class="tab-option-title" />
+							</hbox>
+							<hbox>
+								<label class="tab-options" value="Mode : " />
+								<menulist class="tab-option" oncommand="CdRip.freac.conf_lame_mode = document.getElementById('conf_lame_mode').parentNode.selectedItem.value;">
+									<menupopup id="conf_lame_mode">
+										<menuitem label="VBR" value="0"/>
+										<menuitem label="CBR" value="1"/>
+										<menuitem label="ABR" value="2"/>
+									</menupopup>
+								</menulist>
+							</hbox>
+							<hbox>
+								<label class="tab-options" value="CBR/ABR bitrate : " />
+								<textbox id="conf_lame_cbr_abr_bitrate" type="number" min="8" max="320" increment="1" wraparound="true" value="192" class="tab-option" oncommand="CdRip.freac.conf_lame_cbr_abr_bitrate = document.getElementById('conf_lame_cbr_abr_bitrate').value;"/>
+							</hbox>
+							<hbox>
+								<label class="tab-options" value="VBR quality : " />
+								<textbox id="conf_lame_vbr_quality" type="number" min="0" max="9" increment="1" wraparound="true" value="5" class="tab-option" oncommand="CdRip.freac.conf_lame_vbr_quality = document.getElementById('conf_lame_vbr_quality').value;"/>
+							</hbox>
+						</vbox>
+					</tabpanel>
+					<!-- TAB VORBIS -->
+					<tabpanel>
+						<vbox>
+							<hbox>
+								<label value="Options for Ogg Vorbis encoder" class="tab-option-title" />
+							</hbox>
+							<hbox>
+								<label value="Mode : " class="tab-options"/>
+								<menulist class="tab-option">
+									<menupopup>
+										<menuitem label="VBR" selected="true"/>
+										<menuitem label="ABR"/>
+									</menupopup>
+								</menulist>
+							</hbox>
+							<hbox>
+								<label value="VBR mode quality : " class="tab-options"/>
+								<textbox id="" type="number" min="0" max="100" increment="1" wraparound="true" value="60" class="tab-option"/>
+							</hbox>
+							<hbox>
+								<label value="ABR mode target bitrate : " class="tab-options"/>
+								<textbox id="" type="number" min="45" max="500" increment="1" wraparound="true" value="192" class="tab-option"/>
+							</hbox>
+						</vbox>
+					</tabpanel>
+					<!-- TAB BONK -->
+					<tabpanel>
 
-	</groupbox>
-	
-	<groupbox>
-		<caption label="Besoin d'aide ?"/>
-		<hbox>
-			<spacer flex="1" />
-			<button label="A propos de CD RIP" oncommand="ouvrirAide()" />
-			<button label="Documentation CD RIP" oncommand="ouvrirAide()" />
-		</hbox>
-	</groupbox>
-	
+						<vbox flex="1">
+							<hbox>
+								<label value="Options for Bonk encoder" class="tab-option-title" />
+							</hbox>
+							<hbox>
+								<label value="Quantization factor : " class="tab-options"/>
+								<textbox id="" type="number" min="0" max="2.0" increment="0.1" wraparound="true" value="0.4" class="tab-option"/>
+								<spacer style="width:100px" />
+								<checkbox label="Use Joint Stereo" />
+							</hbox>
+							<hbox>
+								<label value="Predictor size : " class="tab-options"/>
+								<textbox id="" type="number" min="0" max="512" increment="1" wraparound="true" value="32" class="tab-option"/>
+								<spacer style="width:100px" />
+								<checkbox label="Use lossless compression" />
+							</hbox>
+							<hbox>
+								<label value="Downsampling ratio : " class="tab-options"/>
+								<textbox id="" type="number" min="1" max="10" increment="1" wraparound="true" value="2" class="tab-option"/>
+							</hbox>
+						</vbox>
+					</tabpanel>
+					<!-- TAB BLADE -->
+					<tabpanel>
+						<vbox>
+							<hbox>
+								<label value="Options for BladeEnc encoder" class="tab-option-title" />
+							</hbox>
+							<hbox>
+								<label value="Bitrate : " class="tab-options"/>
+								<menulist class="tab-option">
+									<menupopup>
+										<menuitem label="32"/>
+										<menuitem label="40"/>
+										<menuitem label="48"/>
+										<menuitem label="56"/>
+										<menuitem label="64"/>
+										<menuitem label="80"/>
+										<menuitem label="96"/>
+										<menuitem label="112"/>
+										<menuitem label="128"/>
+										<menuitem label="160"/>
+										<menuitem label="192" selected="true"/>
+										<menuitem label="224"/>
+										<menuitem label="256"/>
+										<menuitem label="320"/>
+									</menupopup>
+								</menulist>
+							</hbox>
+						</vbox>
+					</tabpanel>
+					<!-- TAB FAAC -->
+					<tabpanel>
+						<vbox flex="1">
+							<hbox>
+								<label value="Options for FAAC AAC/MP4 encoder" class="tab-option-title" />
+							</hbox>
+							<hbox>
+								<label value="Mode : " class="tab-options"/>
+								<menulist class="tab-option">
+									<menupopup>
+										<menuitem label="VBR" selected="true"/>
+										<menuitem label="ABR"/>
+									</menupopup>
+								</menulist>
+								<spacer style="width:100px" />
+								<checkbox label="Use MP4 container format" />
+							</hbox>
+							<hbox>
+								<label value="VBR mode quality : " class="tab-options"/>
+								<textbox id="" type="number" min="10" max="500" increment="1" wraparound="true" value="100" class="tab-option"/>
+							</hbox>
+							<hbox>
+								<label value="ABR mode bitrate per channel : " class="tab-options"/>
+								<textbox id="" type="number" min="8" max="256" increment="1" wraparound="true" value="64" class="tab-option"/>
+							</hbox>
+						</vbox>
+					</tabpanel>
+					<!-- TAB FLAC -->
+					<tabpanel>
+						<vbox>
+							<hbox>
+								<label value="Options for FLAC encoder" class="tab-option-title" />
+							</hbox>
+							<hbox>
+								<label value="Blocksize : " class="tab-options"/>
+								<textbox id="" type="number" min="192" max="32768" increment="1" wraparound="true" value="4608" class="tab-option"/>
+								<spacer style="width:100px" />
+								<label value="Min Rice : " class="tab-options"/>
+								<textbox id="" type="number" min="0" max="16" increment="1" wraparound="true" value="3" class="tab-option"/>
+								<spacer style="width:100px" />
+								<checkbox label="Do exhaustive QLP coeff optimization" />
+							</hbox>
+							<hbox>
+								<label value="Max LPC order : " class="tab-options"/>
+								<textbox id="" type="number" min="0" max="32" increment="1" wraparound="true" value="8" class="tab-option"/>
+								<spacer style="width:100px" />
+								<label value="Max Rice : " class="tab-options"/>
+								<textbox id="" type="number" min="0" max="16" increment="1" wraparound="true" value="3" class="tab-option"/>
+								<spacer style="width:100px" />
+								<checkbox label="Do exhaustive model search" />
+							</hbox>
+							<hbox>
+								<label value="QLP coeff precision : " class="tab-options"/>
+								<textbox id="" type="number" min="0" max="16" increment="1" wraparound="true" value="0" class="tab-option"/>
+								<spacer style="width:476px" />
+								<checkbox label="Use mid-side stereo" />
+							</hbox>
+						</vbox>
+					</tabpanel>
+					<!-- TAB TVQ -->
+					<tabpanel>
+						<vbox>
+							<hbox>
+								<label value="Options for TwinVQ encoder" class="tab-option-title" />
+							</hbox>
+							<hbox>
+							<label value="Bitrate per channel : " class="tab-options"/>
+								<menulist class="tab-option">
+									<menupopup>
+										<menuitem label="24"/>
+										<menuitem label="32"/>
+										<menuitem label="48" selected="true"/>
+									</menupopup>
+								</menulist>
+							</hbox>
+							<hbox>
+								<label value="Preselection candidates : " class="tab-options"/>
+								<menulist class="tab-option">
+									<menupopup>
+										<menuitem label="4"/>
+										<menuitem label="8"/>
+										<menuitem label="16"/>
+										<menuitem label="32" selected="true"/>
+									</menupopup>
+								</menulist>
+							</hbox>
+						</vbox>
+					</tabpanel>
+					<!-- TAB WAVE -->
+					<tabpanel>
+						<vbox>
+							<hbox>
+								<label value="Options for WAVE encoder" class="tab-option-title" />
+							</hbox>
+							<hbox>
+								<label value="No options can be configured for the WAVE Out filter!"/>
+							</hbox>
+						</vbox>
+					</tabpanel>
+					<!-- TAB STATS -->
+					<tabpanel>
+						<vbox>
+							<hbox>
+								<label value="Statistiques CD RIP" class="tab-option-title" />
+							</hbox>
+							<hbox>
+								<label value="total time convert / total file convert / ~time VBR / ~time CBR..."/>
+							</hbox>
+						</vbox>
+					</tabpanel>
+				</tabpanels>
+			</tabbox>
+		</groupbox>
+		
+		
+		<!-- GROUPBOX AIDE -->
+		<groupbox>
+			<caption label="Besoin d'aide ?"/>
+			<hbox>
+				<spacer flex="1" />
+				<button label="A propos de CD RIP" oncommand="ouvrirAide()" />
+				<button label="Documentation CD RIP" oncommand="ouvrirAide()" />
+			</hbox>
+		</groupbox>
+		
+	</box>
 </window>

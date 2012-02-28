@@ -1,2 +1,24 @@
+label.tab-options{
+	width:180px;
+}
 
+label.tab-option-title{
+	font-size:150%; 
+	font-weight:bold;
+}
 
+button.tab-options{
+	width:80px;
+}
+
+menulist.tab-option{
+	width:80px;
+}
+
+textbox.tab-option{
+	width:80px;
+}
+
+button.main{
+	width:80px;
+}
