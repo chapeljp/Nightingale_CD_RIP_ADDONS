@@ -12,7 +12,7 @@
 	<script src="main.js"/>
 	<script src="nsiProcess_test.js"/>
 
-	<box style="overflow: auto;" orient="vertical">
+	<tabbox flex="1" orient="vertical" style="overflow: auto;">
 		<!-- GROUPBOX CD RIP -->
 		<groupbox>
 		<caption label="CD RIP"/>
@@ -22,51 +22,43 @@
 				<box flex="10" orient="vertical">	
 					<hbox>
 						<label value="Encodeur :" style="width:120px;" />
-						<menulist style="width:100px;"  >
-							<menupopup>
-								<menuitem label="LAME" selected="true"  />
-								<menuitem label="VORBIS"/>
-								<menuitem label="BONK"/>
-								<menuitem label="BLADE"/>
-								<menuitem label="FAAC"/>
-								<menuitem label="FLAC"/>
-								<menuitem label="TVQ"/>
-								<menuitem label="WAVE"/>
+						<menulist style="width:100px;" oncommand="CdRip.freac.main_encoder = document.getElementById('main_encoder').parentNode.selectedItem.value;" >
+							<menupopup id="main_encoder">
+								<menuitem label="LAME" value="0"/>
+								<menuitem label="VORBIS" value="1"/>
+								<menuitem label="BONK" value="2"/>
+								<menuitem label="BLADE" value="3"/>
+								<menuitem label="FAAC" value="4"/>
+								<menuitem label="FLAC" value="5"/>
+								<menuitem label="TVQ" value="6"/>
+								<menuitem label="WAVE" value="7"/>
 							</menupopup>
 						</menulist>
 					</hbox>
 					<hbox>
 						<label value="Répertoire de sortie :" style="width:120px;" />
-						<textbox id="default" style="width:250px;" />
-						<button id="?" label="Parcourrir" class="main"/>
+						<textbox id="main_output_dir" style="width:250px;" />
+						<button label="Parcourrir" class="main" oncommand="CdRip.freac.getDirectory('main_output_dir')"/>
 					</hbox>
 					<hbox>
 						<label value="Lecteur :" style="width:120px;" />
-						<menulist style="width:100px;" >
-							<menupopup>
-								<menuitem label=""/>
-							</menupopup>
-						</menulist>
+						<textbox id="main_drive" style="width:250px;" />
+						<button label="Parcourrir" class="main" oncommand="	CdRip.freac.getDirectory('main_drive'); 
+																			CdRip.freac.dropList('main_list_tracks');
+																			CdRip.freac.browseDir(document.getElementById('main_drive').value);
+																			document.getElementById('main_count_selected_tracks').value = CdRip.freac.countSelectItemsInList('main_list_tracks')+'/'+CdRip.freac.countItemsInList('main_list_tracks');"/>
 					</hbox>
 					<hbox>
 						<label value="Titres :" style="width:120px;" />
-						<listbox id="multi-box" rows="5" seltype="multiple" onselect="setCount('multi-box', 'multi-text');" style="width:250px;" >
-							<!-- <listitem label="Gray"   /> -->
-							<listitem label="Track01.cda"   />
-							<listitem label="Track02.cda"   />
-							<listitem label="Track03.cda"   />
-							<listitem label="Track04.cda"   />
-							<listitem label="Track05.cda"   />
-							<listitem label="Track06.cda"   />
-							<listitem label="Track07.cda"   />
+						<listbox id="main_list_tracks" rows="5" seltype="multiple" onselect="document.getElementById('main_count_selected_tracks').value = CdRip.freac.countSelectItemsInList('main_list_tracks')+'/'+CdRip.freac.countItemsInList('main_list_tracks');" style="width:250px;" >
+							<!-- <listitem label="name_of_track"   /> -->
 						</listbox>
 					</hbox>
 					<hbox>
 						<label value="" style="width:120px;" />
-						<button label="Select All" oncommand="selectAll('multi-box');" class="main"/>
-						<button label="Clear All" oncommand="clearAll('multi-box');" class="main"/>
-						<description  value="#" />
-						<description  id="multi-text" value="0" />					
+						<button label="Tout sélectionner" oncommand="CdRip.freac.selectAllTracks('main_list_tracks');" class="main"/>
+						<button label="Vider" oncommand="CdRip.freac.clearAllTracks('main_list_tracks');" class="main"/>
+						<description  id="main_count_selected_tracks" value="0/0" />
 					</hbox>
 				</box>
 				
@@ -78,15 +70,16 @@
 					<box orient="horizontal"  pack="center">
 						<hbox>
 							<button label="Start RIP" oncommand="CdRip.freac.run();" class="main"/>
-							<button label="Stop RIP" class="main"/>
+							<button label="Stop RIP" oncommand="CdRip.freac.writeLog('Stop RIP')" class="main"/>
 						</hbox>
 					</box>
 					<groupbox>
-					<caption label="Infos progression total : (3/7)"/>
+					<caption label="Infos progression total : "/>
 						<box orient="vertical">
-								<progressmeter mode="undetermined" />
-								<label value="Temps écoulé :" />
-								<label value="Temps restant :" />	
+								<progressmeter id="main_progress_meter" mode="determined" value="0" />
+								<hbox><label value="Pistes :" /><label id="main_rip_tracks" value="" /></hbox>
+								<hbox><label value="Temps écoulé :" /><label id="main_riped_time" value="" /></hbox>
+								<hbox><label value="Temps restant :" /><label id="main_final_time" value="" /></hbox>	
 						</box>
 					</groupbox>
 					<groupbox>
@@ -117,6 +110,7 @@
 					<tab label="TVQ" style="-moz-border-radius: 5px;"/>
 					<tab label="WAVE" style="-moz-border-radius: 5px;"/>
 					<tab label="STATS" style="-moz-border-radius: 5px;"/>
+					<tab label="DEBUG" style="-moz-border-radius: 5px;"/>
 				</tabs>
 				<tabpanels>
 					<!-- TAB CD RIP -->
@@ -128,16 +122,15 @@
 							<hbox>
 								<label class="tab-options" value="Répertoire de freac : " />
 								<textbox id="conf_cd_rip_freaccmd_exe" style="width:250px;" />
-								<button label="Affecter" oncommand="CdRip.freac.conf_cd_rip_freaccmd_exe = document.getElementById('conf_cd_rip_freaccmd_exe').value;" class="tab-options" />
+								<button label="Parcourrir" oncommand="	CdRip.freac.getDirectory('conf_cd_rip_freaccmd_exe');" class="tab-options" />
 							</hbox>
 							<hbox>
-								<label class="tab-options" value="Répertoire de sorie par défaut : " />
-								<textbox id="conf_cd_rip_oupout_dir" style="width:250px;" />
-								<button label="Parcourrir" oncommand="CdRip.freac.conf_cd_rip_oupout_dir = document.getElementById('conf_cd_rip_oupout_dir').value;" class="tab-options" />
+								<label class="tab-options" value="Time out (s) : " />
+								<textbox id="conf_cd_rip_timeout" type="number" min="10" max="3600" increment="1" wraparound="true" value="120" class="tab-option" oncommand="CdRip.freac.conf_cd_rip_timeout = document.getElementById('conf_cd_rip_timeout').value;"/>
 							</hbox>
 							<hbox>
 								<label class="tab-options" value="Réinitialiser les préférences : " />
-								<button label="Réinitialiser" oncommand="" class="tab-options" />
+								<button label="Réinitialiser" oncommand="CdRip.freac.resetUi();" class="tab-options" />
 							</hbox>
 						</vbox>
 					</tabpanel>
@@ -356,6 +349,14 @@
 							</hbox>
 						</vbox>
 					</tabpanel>
+					<!-- TAB DEBUG -->
+					<tabpanel>
+						<hbox>
+							  <textbox id="log_console" multiline="true" rows="7" cols="150" value="" />
+							  <button label="clear" oncommand="document.getElementById('log_console').value = '';"/>
+							  <textbox id="current_dir_path"  value=""/>
+						</hbox>
+					</tabpanel>
 				</tabpanels>
 			</tabbox>
 		</groupbox>
@@ -370,6 +371,5 @@
 				<button label="Documentation CD RIP" oncommand="ouvrirAide()" />
 			</hbox>
 		</groupbox>
-		
-	</box>
+	</tabbox>
 </window>

@@ -28,21 +28,21 @@ CdRip.Controller = {
       this._firstRunSetup();
     }
 
-	//charge les prefs
-	var prefs = Components.classes["@mozilla.org/preferences-service;1"]
-				.getService(Components.interfaces.nsIPrefService);
-	prefs = prefs.getBranch("extensions.cd-rip.");
+	//main
+	document.getElementById('main_encoder').parentNode.selectedIndex = CdRip.freac.main_encoder;
+	document.getElementById('main_output_dir').value = CdRip.freac.main_output_dir;
+	document.getElementById('main_drive').value = CdRip.freac.main_drive;
+	CdRip.freac.browseDir(CdRip.freac.main_drive);
+	document.getElementById('main_count_selected_tracks').value = CdRip.freac.countSelectItemsInList('main_list_tracks')+'/'+CdRip.freac.countItemsInList('main_list_tracks');
 	
-	
-	//définition des prefs
 	//onglet - CD RIP
-	document.getElementById('conf_cd_rip_freaccmd_exe').value = prefs.getCharPref("conf_cd_rip_freaccmd_exe");
-	document.getElementById('conf_cd_rip_oupout_dir').value = prefs.getCharPref("conf_cd_rip_oupout_dir");
+	document.getElementById('conf_cd_rip_freaccmd_exe').value = CdRip.freac.conf_cd_rip_freaccmd_exe;
+	document.getElementById('conf_cd_rip_timeout').value = CdRip.freac.conf_cd_rip_timeout;
 	
 	//onglet - LAME
-	document.getElementById('conf_lame_mode').parentNode.selectedIndex = prefs.getIntPref("conf_lame_mode");
-	document.getElementById('conf_lame_cbr_abr_bitrate').value = prefs.getIntPref("conf_lame_cbr_abr_bitrate");
-	document.getElementById('conf_lame_vbr_quality').value = prefs.getIntPref("conf_lame_vbr_quality");
+	document.getElementById('conf_lame_mode').parentNode.selectedIndex = CdRip.freac.conf_lame_mode;
+	document.getElementById('conf_lame_cbr_abr_bitrate').value = CdRip.freac.conf_lame_cbr_abr_bitrate;
+	document.getElementById('conf_lame_vbr_quality').value = CdRip.freac.conf_lame_vbr_quality;
 	
 	//onglet - VORBIS
 	

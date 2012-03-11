@@ -3,7 +3,42 @@
 <?xml-stylesheet href="chrome://global/skin" type="text/css"?>
 <?xml-stylesheet href="chrome://songbirdnest/content/bindings/bindings.css" type="text/css"?>
 <?xml-stylesheet href="chrome://songbirdnest/skin/songbirdnest.css" type="text/css" title="Skin"?>
+<?xml-stylesheet href="chrome://cd-rip/skin/overlay.css" type="text/css" title="Skin"?>
 
-<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="CD RIP - Réinitialisation options">
-	
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" 
+		title="CD RIP - Réinitialisation options"
+		ondialogaccept="return onOK();">
+
+<script src="CD_RIP_freac.js"/>
+<script src="CD_RIP_reset.js"/>
+
+	<vbox>
+		<hbox>
+			<label value="Choix des modules à réinitialiser" class="tab-option-title" />
+		</hbox>
+		<hbox>
+			<checkbox label="LAME" id="lame" />
+		</hbox>
+		<hbox>
+			<checkbox label="VORBIS" id="vorbis" />
+		</hbox>
+		<hbox>
+			<checkbox label="BONK" id="bonk" />
+		</hbox>
+		<hbox>
+			<checkbox label="BLADE" id="blade" />
+		</hbox>
+		<hbox>
+			<checkbox label="FAAC" id="faac" />
+		</hbox>
+		<hbox>
+			<checkbox label="FLAC" id="flac" />
+		</hbox>
+		<hbox>
+			<checkbox label="TVQ" id="tvq" />
+		</hbox>
+		<hbox>
+			<checkbox label="WAVE" id="wave" />
+		</hbox>
+	</vbox>
 </dialog>
