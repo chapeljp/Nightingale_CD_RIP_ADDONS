@@ -69,8 +69,7 @@
 				<box flex="100" orient="vertical"  pack="center">
 					<box orient="horizontal"  pack="center">
 						<hbox>
-							<button label="Start RIP" oncommand="CdRip.freac.run();" class="main"/>
-							<button label="Stop RIP" oncommand="CdRip.freac.writeLog('Stop RIP')" class="main"/>
+							<button id="main_button_start_rip" label="Start RIP" oncommand="CdRip.freac.run();" class="main" disabled="false" />
 						</hbox>
 					</box>
 					<groupbox>
@@ -83,9 +82,9 @@
 						</box>
 					</groupbox>
 					<groupbox>
-					<caption label="Infos progression : Track04.cda"/>
+					<caption label="Infos progression :"/>
 						<box orient="vertical">
-								<progressmeter mode="undetermined" />
+								<progressmeter id="main_progress_meter_file" mode="determined" value="0" />
 								<label value="Temps écoulé :" />
 								<label value="Temps restant :" />	
 						</box>
