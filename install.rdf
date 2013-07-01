@@ -8,13 +8,7 @@
     <em:version>1.0.0.0</em:version>
     <em:creator>asdes</em:creator>
 
-
     <em:description>CD Rip as an add-on to be able to extract audio tracks from CDs </em:description>
-
-
-
-
-
 
     <em:iconURL>chrome://cd-rip/skin/icon_addon.png</em:iconURL>
 
@@ -23,15 +17,9 @@
       <Description>
         <em:id>nightingale@getnightingale.com</em:id>
         <em:minVersion>1.8.0</em:minVersion>
-        <em:maxVersion>1.11.*</em:maxVersion>
+        <em:maxVersion>1.12.*</em:maxVersion>
       </Description>
     </em:targetApplication>
-
-
-
-
-
-
 
   </Description>
 </RDF>
