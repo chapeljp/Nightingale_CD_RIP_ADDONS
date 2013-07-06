@@ -17,15 +17,15 @@
    <value name="ShowTooltips">1</value>
    <value name="WindowPosX">100</value>
    <value name="WindowPosY">100</value>
-   <value name="WindowSizeX">800</value>
+   <value name="WindowSizeX">765</value>
    <value name="WindowSizeY">600</value>
-   <value name="WindowMaximized">0</value>
+   <value name="WindowMaximized">1</value>
    <value name="TabWidthTrack">50</value>
    <value name="TabWidthLength">80</value>
    <value name="TabWidthSize">80</value>
    <value name="OutputPlugin">0</value>
-   <value name="ShowTips">1</value>
-   <value name="TipOffset">1</value>
+   <value name="ShowTips">0</value>
+   <value name="TipOffset">2</value>
    <value name="CheckUpdatesAtStartup">0</value>
    <value name="CreatePlaylist">0</value>
    <value name="CreateCueSheet">0</value>
@@ -54,7 +54,7 @@
    <value name="NumberOfThreads">0</value>
   </section>
   <section name="Donate">
-   <value name="StartCount">1</value>
+   <value name="StartCount">3</value>
    <value name="ShowAgain">1</value>
   </section>
   <section name="CDRip">
@@ -76,9 +76,9 @@
    <value name="EjectAfterRipping">0</value>
   </section>
   <section name="freedb">
-   <value name="AutoCDDBQueries">1</value>
+   <value name="AutoCDDBQueries">0</value>
    <value name="OverwriteCDText">1</value>
-   <value name="EnableCDDBCache">1</value>
+   <value name="EnableCDDBCache">0</value>
    <value name="EnableLocalCDDB">0</value>
    <value name="Directory">freedb\</value>
    <value name="EnableRemoteCDDB">1</value>
